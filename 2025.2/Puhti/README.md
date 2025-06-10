@@ -1,6 +1,7 @@
 runeberg@tofsmes:~/Support/Molpro/install$ scp molpro-2025.2.0.tar.gz puhti:/projappl/project_2001659/runeberg/molpro/
 
 ssh puhti-login13
+```
 # Installation instructions form Molpro 2024.3 on puhti
 # [runeberg@puhti-login14 runeberg]$ sha1sum /projappl/project_2001659/runeberg/molpro/molpro-2025.2.0.tar.gz
 # 971d0c87dbf54603dce3a2db6dad4ed00b2d2b1f  /projappl/project_2001659/runeberg/molpro/molpro-2025.2.0.tar.gz
@@ -44,4 +45,4 @@ make install
 
 sed -i -e '/LAUNCHER/{;/mpirun/s/LAUNCHER/#LAUNCHER/;}' $MOLPRO_INSTDIR/molpro_2024.3/bin/molpro
 sed -i '4i LAUNCHER="srun %x"' $MOLPRO_INSTDIR/molpro_2025.2/bin/molpro
-
+``
