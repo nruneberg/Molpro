@@ -1,0 +1,54 @@
+#!/bin/bash
+#SBATCH --partition=small
+#SBATCH --account=project_2001659             # insert here the project to be billed
+#SBATCH --nodes=1
+#SBATCH --ntasks=24                            # 
+#SBATCH --mem-per-cpu=5760                    # Increase to get more memory  
+#SBATCH --time=03:00:00 # time as hh:mm:ss
+#SBATCH --gres=nvme:600           # requested local disk space in GB
+module purge
+module load molpro/2025.2
+
+
+#MEM_PER_CORE_MB=1920  # Memory per core in MB
+#MEM_PER_TASK_MB=$(echo "$SLURM_CPUS_PER_TASK * $MEM_PER_CORE_MB" | bc)
+MEM_PER_TASK_MW=$(echo "$SLURM_MEM_PER_CPU / 8" | bc)  # Convert MB to megawords
+
+# Define whether to use local disk or parallel disk
+if [ "$LOCAL_SCRATCH" != "" ]; then
+    export MOLPRO_TMP=$LOCAL_SCRATCH/MOLPRO_TMP_$SLURM_JOB_ID  # Use local disk
+else
+    export MOLPRO_TMP=$PWD/MOLPRO_TMP_$SLURM_JOB_ID  # Use parallel disk
+fi
+
+mkdir -p $MOLPRO_TMP
+mkdir -p benzene_ccsd_t_avtz_parallel_n${SLURM_NTASKS}
+cd benzene_ccsd_t_avtz_parallel_n${SLURM_NTASKS}
+# Prepare Molpro input file directly within the script
+cat << EOF > benzene_ccsd_t_avtz_parallel.inp
+*** Benzene CCSD(T)/AVQZ calculation
+memory,${MEM_PER_TASK_MW},m 
+
+geometry={
+ C   0.000000   0.000000   1.395000
+ H   1.191000   0.000000   2.542000
+ C   0.000000   0.000000  -1.395000
+ H   1.191000   0.000000  -2.542000
+ C   1.395000   0.000000   0.000000
+ H   2.542000   0.000000   1.191000
+ C  -1.395000   0.000000   0.000000
+ H  -2.542000   0.000000   1.191000
+ C   0.000000   1.395000   0.000000
+ H   1.191000   2.542000   0.000000
+ C   0.000000  -1.395000   0.000000
+ H   1.191000  -2.542000   0.000000
+}
+basis=avqz
+hf
+ccsd(t)
+
+EOF
+
+# Run the Molpro calculation 
+$MOLPROP -d$MOLPRO_TMP -I$MOLPRO_TMP -W$PWD benzene_ccsd_t_avtz_parallel.inp -o benzene_ccsd_t_avtz_parallel_n${SLURM_NTASKS}.out
+
