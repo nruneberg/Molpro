@@ -1,1 +1,4 @@
 
+runeberg@puhti-login13 runeberg]$ pwd
+/local_scratch/runeberg
+[runeberg@puhti-login13 runeberg]$ bash ./molpro-mpp-2025.2.0.linux_x86_64.sh -batch -prefix /appl/soft/chem/molpro/molpro_2025.2
