@@ -1,1 +1,6 @@
 
+runeberg@tofsmes:~/Support/Molpro/install$ scp molpro-mpp-2025.4.1.linux_x86_64.sh.gz puhti:/projappl/project_2001659/runeberg/
+runeberg@puhti-login13 runeberg]$ pwd
+/local_scratch/runeberg
+[runeberg@puhti-login13 runeberg]$ gunzip /projappl/project_2001659/runeberg/molpro-mpp-2025.4.1.linux_x86_64.sh.gz
+[runeberg@puhti-login13 runeberg]$ bash /projappl/project_2001659/runeberg/molpro-mpp-2025.4.1.linux_x86_64.sh -batch -prefix /appl/soft/chem/molpro/molpro_2025.4
