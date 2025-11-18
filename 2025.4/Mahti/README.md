@@ -4,4 +4,6 @@
 /local_scratch/runeberg
 [runeberg@mahti-login13 runeberg]$  cp /projappl/project_2001659/runeberg/molpro/molpro-mpp-2025.4.1.linux_x86_64.sh .
 [runeberg@mahti-login13 runeberg]$ bash molpro-mpp-2025.4.1.linux_x86_64.sh  -batch -prefix /appl/soft/chem/molpro/molpro_2025.4
+[runeberg@mahti-login13 runeberg]$ cp /appl/soft/chem/molpro/molpro_2025.3/bin/disk_logger.sh /appl/soft/chem/molpro/molpro_2025.4/bin/
+
 ```
